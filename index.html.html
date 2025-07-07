@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pra Você 💜</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1a001a, #330033);
+      color: #fff;
+      font-family: "Indie Flower", cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+    }
+    .container {
+      max-width: 90%;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      font-size: 18px;
+      border-radius: 10px;
+      background-color: #660066;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #990099;
+    }
+    #final {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="https://www.youtube.com/watch?v=n1Hzf_is8tI" type="audio/mpeg" />
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <div class="container" id="quiz">
+    <h2 id="pergunta"></h2>
+    <div class="buttons">
+      <button id="a"></button>
+      <button id="b"></button>
+    </div>
+  </div>
+
+  <div id="final">
+    <h2>💌 Obrigada por chegar até aqui 💌</h2>
+    <p>Agora clica no botão e vem falar comigo no Whats!</p>
+    <a href="https://wa.me/12988886597" target="_blank">
+      <button>Ir pro WhatsApp</button>
+    </a>
+  </div>
+
+  <script>
+    const perguntas = [
+      {
+        texto: "Oi, desculpa tomar seu tempo, to incomodando?",
+        opcoes: ["sim", "não, imagina linda"],
+        correta: 1,
+      },
+      {
+        texto:
+          "sabia que eu gosto mt de vc e to triste da vida feito um cachorrinho abandonado pq a gnt ta distante?",
+        opcoes: ["não, para de drama", "simmmmmmmm"],
+        correta: 1,
+      },
+      {
+        texto:
+          "vc faz falta... sabia q essa garota aq ta mais arrependida q tudo por ter te magoado e que se ela pudesse voltar no tempo n teria sido uma bobona?",
+        opcoes: [
+          "simm, eu sei q n foi sua intenção e q vc jamais faria nada pra me machucar de proposito",
+          "não",
+        ],
+        correta: 0,
+      },
+      {
+        texto:
+          "agr uma pergunta mt dificil pra vc, sabia q eu to tendo esse trabalho todo aq de montar um site pq eu gosto mt de vc ne?",
+        opcoes: ["simm, eu sei q vc me ama e n vive sem mim", "não gosta nada"],
+        correta: 0,
+      },
+      {
+        texto:
+          "ta quase acabando, responde mais algumas so, vamo ver se vc ainda me conhece po, qual minha cor favorita?",
+        opcoes: ["preto", "roxo"],
+        correta: 1,
+      },
+      {
+        texto: "quem é minha pessoa favorita nesse mundo ?",
+        opcoes: ["você", "essa aq n existe pq só a A pode estar correta"],
+        correta: 0,
+      },
+      {
+        texto:
+          "vc sabe q eu nunquinha nesse universo inteiro faria algo consientemente que pudesse te machucar ne ?",
+        opcoes: [
+          "faria sim, trouxa",
+          "claro que eu sei, e sei tambem que vc sabe q a forma como eu me senti n é anulada pelo fato de vc n ter tido a intenção, e eu sei tbm q vc idependente de tudo ta arrependida como nunca antes.",
+        ],
+        correta: 1,
+      },
+      {
+        texto:
+          "sabia q eu só queria mt poder voltar a ser como eramos antes? sem a questao do relacionamento mas na amizade... o que me diz?",
+        opcoes: ["nss, qitextao", "vai me responder no wpp"],
+        correta: 1,
+      },
+    ];
+
+    let indice = 0;
+    const pergunta = document.getElementById("pergunta");
+    const botoes = [document.getElementById("a"), document.getElementById("b")];
+    const quiz = document.getElementById("quiz");
+    const final = document.getElementById("final");
+
+    function carregarPergunta() {
+      const atual = perguntas[indice];
+      pergunta.textContent = atual.texto;
+      atual.opcoes.forEach((op, i) => {
+        botoes[i].textContent = op;
+        botoes[i].style.position = "static";
+        botoes[i].onmouseover = () => {
+          if (i !== atual.correta) {
+            const btn = botoes[i];
+            btn.style.position = "absolute";
+            btn.style.top = Math.random() * 80 + "vh";
+            btn.style.left = Math.random() * 80 + "vw";
+          }
+        };
+        botoes[i].onclick = () => {
+          if (i === atual.correta) {
+            indice++;
+            if (indice < perguntas.length) {
+              carregarPergunta();
+            } else {
+              quiz.style.display = "none";
+              final.style.display = "flex";
+            }
+          }
+        };
+      });
+    }
+
+    carregarPergunta();
+  </script>
+</body>
+</html>
